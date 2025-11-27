@@ -13,47 +13,43 @@
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background:#fff; 
-            color:var(--text); 
-            line-height:1.8; 
-            overflow-x: hidden;
-        }
+        body { font-family: 'Inter', sans-serif; background:#fff; color:var(--text); line-height:1.8; overflow-x:hidden; }
 
+        /* Хедер */
         header {
-            position: fixed; top: 0; left: 0; right: 0; height: 76px;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 24px; background: transparent; transition: all .4s; z-index: 1000;
+            position:fixed; top:0; left:0; right:0; height:76px;
+            display:flex; align-items:center; justify-content:space-between;
+            padding:0 24px; background:transparent; transition:all .4s; z-index:1000;
         }
         header.scrolled {
-            background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
-            box-shadow: 0 4px 25px rgba(233,30,99,0.12); height: 68px;
+            background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
+            box-shadow:0 4px 25px rgba(233,30,99,0.12); height:68px;
         }
         .logo-img {
-            width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
-            border: 3px solid #fff; box-shadow: 0 4px 15px rgba(233,30,99,0.3);
-            transition: border-color .4s;
+            width:48px; height:48px; border-radius:50%; object-fit:cover;
+            border:3px solid #fff; box-shadow:0 4px 15px rgba(233,30,99,0.3);
+            transition:border-color .4s;
         }
-        header.scrolled .logo-img { border-color: var(--primary); }
+        header.scrolled .logo-img { border-color:var(--primary); }
 
         nav a {
-            color: #fff; text-decoration: none; margin-left: 28px; font-weight: 500; font-size: 15px;
-            position: relative; transition: color .4s;
+            color:#fff; text-decoration:none; margin-left:28px; font-weight:500; font-size:15px;
+            position:relative; transition:color .4s;
         }
-        header.scrolled nav a { color: #333; }
+        header.scrolled nav a { color:#333; }
         nav a::after {
-            content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px;
-            background: var(--primary); transition: width .4s;
+            content:''; position:absolute; bottom:-6px; left:0; width:0; height:2px;
+            background:var(--primary); transition:width .4s;
         }
-        nav a:hover::after, nav a.active::after { width: 100%; }
-        nav a.active { color: var(--primary); }
+        nav a:hover::after, nav a.active::after { width:100%; }
+        nav a.active { color:var(--primary); }
 
+        /* Герой */
         .hero {
-            height: 100vh; min-height: 680px; display: flex; align-items: center;
-            justify-content: center; text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.6)),
-                        url('https://i.ibb.co/W4z6W6mh/photo-2025-11-27-06-49-53.jpg') center/cover no-repeat fixed;
+            height:100vh; min-height:680px; display:flex; align-items:center;
+            justify-content:center; text-align:center;
+            background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.6)),
+                       url('https://i.ibb.co/W4z6W6mh/photo-2025-11-27-06-49-53.jpg') center/cover no-repeat fixed;
         }
         .hero h1 { font-family:'Playfair Display',serif; font-size:78px; color:#fff;
                    margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7);
@@ -70,7 +66,8 @@
         section { padding:120px 0; opacity:0; transform:translateY(40px); transition:all 1s; }
         section.visible { opacity:1; transform:none; }
 
-        .about-me { background: var(--primary-light); padding:140px 0; }
+        /* Обо мне */
+        .about-me { background:var(--primary-light); padding:140px 0; }
         .about-me .wrapper { display:grid; grid-template-columns:380px 1fr; gap:80px; align-items:center; }
         .about-me img { width:380px; height:380px; object-fit:cover; border-radius:28px;
                         box-shadow:0 25px 60px rgba(233,30,99,0.22); }
@@ -85,17 +82,36 @@
         .card {
             background:#fff; padding:56px 28px; border-radius:24px;
             box-shadow:0 12px 40px rgba(0,0,0,0.07); text-align:center;
-            transition:transform .4s, box-shadow .4s; border:1px solid #f0e0e8;
+            transition:transform .4s,box-shadow .4s; border:1px solid #f0e0e8;
         }
         .card:hover { transform:translateY(-12px); box-shadow:0 20px 50px rgba(233,30,99,0.15); }
-        .icon { width:88px; height:88px; margin:0 auto 28px;
+
+        /* БОЛЬШИЕ РОЗОВЫЕ ТОЧКИ */
+        .card p {
+            position:relative;
+            padding-left:32px;
+            margin:16px 0;
+            text-align:left;
+            font-size:16px;
+            line-height:1.7;
+        }
+        .card p::before {
+            content:"•";
+            position:absolute;
+            left:0;
+            top:50%;
+            transform:translateY(-50%);
+            color:var(--primary);
+            font-size:32px;
+            font-weight:900;
+            line-height:1;
+        }
+
+        .icon { width:88px; height:88px; margin:0 auto 32px;
                 display:flex; align-items:center; justify-content:center; }
         .icon img { width:56px; height:56px; }
 
-        /* интерпункты в карточках */
-        .card p { line-height: 1.9; }
-        .card p::before { content: "⋅"; color: var(--primary); margin-right: 8px; font-weight: bold; }
-
+        /* Контакты */
         .contact-section {
             background:linear-gradient(135deg,#E91E63,#AD1457);
             color:#fff; text-align:center; padding:120px 20px;
@@ -111,6 +127,7 @@
 
         @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
 
+        /* Адаптив */
         @media (max-width:968px) {
             .about-me .wrapper { grid-template-columns:1fr; text-align:center; gap:40px; }
             .about-me img { width:320px; height:320px; margin:0 auto; }
@@ -123,6 +140,8 @@
             section { padding:90px 0; }
             .about-me { padding:100px 0; }
             nav a { margin-left:16px; font-size:14px; }
+            .card p { padding-left:28px; font-size:15px; }
+            .card p::before { font-size:28px; }
         }
     </style>
 </head>
@@ -170,21 +189,21 @@
             <h2>Опыт</h2>
             <div class="cards">
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png" alt="Образование"></div>
                     <h3>Школьное самоуправление</h3>
                     <p>Заместитель президента школы</p>
                     <p>Руководитель медиа-отдела</p>
                     <p>Организатор 20+ мероприятий</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png" alt="Волонтёрство"></div>
                     <h3>Волонтёрство</h3>
                     <p>Десятки проектов и поездок</p>
                     <p>Месяц в Ситуационном центре ВШЭ</p>
                     <p>Помощь сотням иностранных студентов</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png" alt="Студсовет"></div>
                     <h3>Студенческий совет ВШБ</h3>
                     <p>Комитет по работе с иностранцами</p>
                     <p>Первая интеграционная встреча</p>
@@ -199,17 +218,17 @@
             <h2>Ценности</h2>
             <div class="cards">
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png" alt="Помощь"></div>
                     <h3>Помощь</h3>
-                    <p>Решаю реальные проблемы студентов</p>
+                    <p>Решаю реальные проблемы студентов — особенно первокурсников</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png" alt="Открытость"></div>
                     <h3>Открытость</h3>
                     <p>Честный диалог между студентами, советом и администрацией</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png" alt="Развитие"></div>
                     <h3>Развитие</h3>
                     <p>Новые проекты, улучшение старых, постоянный рост</p>
                 </div>
@@ -225,7 +244,7 @@
                 Пиши — отвечаю всем и всегда рада новым знакомствам!
             </p>
             <a href="mailto:kazaisaeva@edu.hse.ru" class="btn">Написать мне на почту</a>
-            <p style="margin-top: 36px; font-size: 17px; opacity: 0.9;">
+            <p style="margin-top:36px; font-size:17px; opacity:0.9;">
                 Или просто скопируй адрес:<br>
                 <span style="font-weight:600; font-size:18px; color:#fff; background:rgba(255,255,255,0.2); padding:8px 16px; border-radius:12px; display:inline-block; margin-top:8px;">
                     kazaisaeva@edu.hse.ru
