@@ -21,221 +21,108 @@
             overflow-x: hidden;
         }
 
-        /* === ХЕДЕР === */
         header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 76px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            background: transparent;
-            transition: all .4s;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; right: 0; height: 76px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px; background: transparent; transition: all .4s; z-index: 1000;
         }
         header.scrolled {
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 25px rgba(233,30,99,0.12);
-            height: 68px;
+            background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+            box-shadow: 0 4px 25px rgba(233,30,99,0.12); height: 68px;
         }
         .logo-img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 15px rgba(233,30,99,0.3);
+            width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
+            border: 3px solid #fff; box-shadow: 0 4px 15px rgba(233,30,99,0.3);
             transition: border-color .4s;
         }
         header.scrolled .logo-img { border-color: var(--primary); }
 
         nav a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 28px;
-            font-weight: 500;
-            font-size: 15px;
-            position: relative;
-            transition: color .4s;
+            color: #fff; text-decoration: none; margin-left: 28px; font-weight: 500; font-size: 15px;
+            position: relative; transition: color .4s;
         }
         header.scrolled nav a { color: #333; }
         nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width .4s;
+            content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px;
+            background: var(--primary); transition: width .4s;
         }
-        nav a:hover::after,
-        nav a.active::after { width: 100%; }
+        nav a:hover::after, nav a.active::after { width: 100%; }
         nav a.active { color: var(--primary); }
 
-        /* === ГЕРОЙ === */
         .hero {
-            height: 100vh;
-            min-height: 680px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            height: 100vh; min-height: 680px; display: flex; align-items: center;
+            justify-content: center; text-align: center;
             background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.6)),
                         url('https://i.ibb.co/W4z6W6mh/photo-2025-11-27-06-49-53.jpg') center/cover no-repeat fixed;
         }
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 78px;
-            color: #fff;
-            margin-bottom: 8px;
-            text-shadow: 0 4px 16px rgba(0,0,0,0.7);
-            opacity: 0;
-            animation: fadeUp 1.2s forwards .6s;
-        }
-        .hero > .container > p {
-            font-size: 22px;
-            color: #eee;
-            font-weight: 300;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeUp 1.2s forwards .9s;
-        }
-        .greeting {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            opacity: 0;
-            animation: fadeUp 1.2s forwards 1.2s;
-        }
-        .greeting img {
-            width: 82px;
-            height: 82px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.4);
-        }
-        .greeting p {
-            font-size: 20px;
-            color: #fff;
-            font-weight: 500;
-        }
+        .hero h1 { font-family:'Playfair Display',serif; font-size:78px; color:#fff;
+                   margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7);
+                   opacity:0; animation:fadeUp 1.2s forwards .6s; }
+        .hero > .container > p { font-size:22px; color:#eee; font-weight:300; margin-bottom:32px;
+                                 opacity:0; animation:fadeUp 1.2s forwards .9s; }
+        .greeting { display:flex; align-items:center; justify-content:center; gap:16px;
+                    opacity:0; animation:fadeUp 1.2s forwards 1.2s; }
+        .greeting img { width:82px; height:82px; border-radius:50%; object-fit:cover;
+                        border:4px solid rgba(255,255,255,0.4); }
+        .greeting p { font-size:20px; color:#fff; font-weight:500; }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width:1100px; margin:0 auto; padding:0 24px; }
+        section { padding:120px 0; opacity:0; transform:translateY(40px); transition:all 1s; }
+        section.visible { opacity:1; transform:none; }
 
-        section {
-            padding: 120px 0;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s;
-        }
-        section.visible { opacity: 1; transform: none; }
+        .about-me { background: var(--primary-light); padding:140px 0; }
+        .about-me .wrapper { display:grid; grid-template-columns:380px 1fr; gap:80px; align-items:center; }
+        .about-me img { width:380px; height:380px; object-fit:cover; border-radius:28px;
+                        box-shadow:0 25px 60px rgba(233,30,99,0.22); }
+        .about-me-text { font-size:18px; color:#444; }
+        .about-me-text p { margin-bottom:24px; }
 
-        /* ОБО МНЕ */
-        .about-me {
-            background: var(--primary-light);
-            padding: 140px 0;
-        }
-        .about-me .wrapper {
-            display: grid;
-            grid-template-columns: 380px 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-        .about-me img {
-            width: 380px;
-            height: 380px;
-            object-fit: cover;
-            border-radius: 28px;
-            box-shadow: 0 25px 60px rgba(233,30,99,0.22);
-        }
-        .about-me-text { font-size: 18px; color: #444; }
-        .about-me-text p { margin-bottom: 24px; }
+        .white-section { background:#fff; }
+        h2 { font-family:'Playfair Display',serif; font-size:48px; text-align:center;
+             color:var(--primary); margin-bottom:64px; }
 
-        .white-section { background: #fff; }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 64px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 36px;
-        }
+        .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:36px; }
         .card {
-            background: #fff;
-            padding: 56px 28px;
-            border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.07);
-            text-align: center;
-            transition: transform .4s, box-shadow .4s;
-            border: 1px solid #f0e0e8;
+            background:#fff; padding:56px 28px; border-radius:24px;
+            box-shadow:0 12px 40px rgba(0,0,0,0.07); text-align:center;
+            transition:transform .4s, box-shadow .4s; border:1px solid #f0e0e8;
         }
-        .card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 50px rgba(233,30,99,0.15);
-        }
-        .icon {
-            width: 88px;
-            height: 88px;
-            margin: 0 auto 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .icon img { width: 56px; height: 56px; }
+        .card:hover { transform:translateY(-12px); box-shadow:0 20px 50px rgba(233,30,99,0.15); }
+        .icon { width:88px; height:88px; margin:0 auto 28px;
+                display:flex; align-items:center; justify-content:center; }
+        .icon img { width:56px; height:56px; }
 
-        /* КОНТАКТЫ */
+        /* интерпункты в карточках */
+        .card p { line-height: 1.9; }
+        .card p::before { content: "⋅"; color: var(--primary); margin-right: 8px; font-weight: bold; }
+
         .contact-section {
-            background: linear-gradient(135deg, #E91E63, #AD1457);
-            color: #fff;
-            text-align: center;
-            padding: 120px 20px;
+            background:linear-gradient(135deg,#E91E63,#AD1457);
+            color:#fff; text-align:center; padding:120px 20px;
         }
-        .contact-section h2 { color: #fff; }
+        .contact-section h2 { color:#fff; }
         .btn {
-            display: inline-block;
-            background: #fff;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 18px;
-            padding: 18px 48px;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 12px 35px rgba(233,30,99,0.4);
-            transition: transform .3s;
+            display:inline-block; background:#fff; color:var(--primary);
+            font-weight:600; font-size:18px; padding:18px 48px; border-radius:50px;
+            text-decoration:none; box-shadow:0 12px 35px rgba(233,30,99,0.4);
+            transition:transform .3s;
         }
-        .btn:hover { transform: translateY(-4px); }
+        .btn:hover { transform:translateY(-4px); }
 
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
 
-        /* Адаптив */
-        @media (max-width: 968px) {
-            .about-me .wrapper {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 40px;
-            }
-            .about-me img { width: 320px; height: 320px; margin: 0 auto; }
+        @media (max-width:968px) {
+            .about-me .wrapper { grid-template-columns:1fr; text-align:center; gap:40px; }
+            .about-me img { width:320px; height:320px; margin:0 auto; }
         }
-        @media (max-width: 768px) {
-            .hero { background-attachment: scroll; padding-top: 80px; }
-            .hero h1 { font-size: 56px; }
-            .greeting { flex-direction: column; }
-            h2 { font-size: 42px; }
-            section { padding: 90px 0; }
-            .about-me { padding: 100px 0; }
-            nav a { margin-left: 16px; font-size: 14px; }
+        @media (max-width:768px) {
+            .hero { background-attachment:scroll; padding-top:80px; }
+            .hero h1 { font-size:56px; }
+            .greeting { flex-direction:column; }
+            h2 { font-size:42px; }
+            section { padding:90px 0; }
+            .about-me { padding:100px 0; }
+            nav a { margin-left:16px; font-size:14px; }
         }
     </style>
 </head>
@@ -283,19 +170,25 @@
             <h2>Опыт</h2>
             <div class="cards">
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png" alt="Образование"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png"></div>
                     <h3>Школьное самоуправление</h3>
-                    <p>Заместитель президента школы<br>Руководитель медиа-отдела<br>Организатор 20+ мероприятий</p>
+                    <p>Заместитель президента школы</p>
+                    <p>Руководитель медиа-отдела</p>
+                    <p>Организатор 20+ мероприятий</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png" alt="Волонтёрство"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png"></div>
                     <h3>Волонтёрство</h3>
-                    <p>Десятки проектов и поездок<br>Месяц в Ситуационном центре ВШЭ<br>Помощь сотням иностранных студентов</p>
+                    <p>Десятки проектов и поездок</p>
+                    <p>Месяц в Ситуационном центре ВШЭ</p>
+                    <p>Помощь сотням иностранных студентов</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png" alt="Студсовет"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png"></div>
                     <h3>Студенческий совет ВШБ</h3>
-                    <p>Комитет по работе с иностранцами<br>Первая интеграционная встреча<br>Работа в Секретариате</p>
+                    <p>Комитет по работе с иностранцами</p>
+                    <p>Первая интеграционная встреча</p>
+                    <p>Работа в Секретариате</p>
                 </div>
             </div>
         </div>
@@ -306,17 +199,17 @@
             <h2>Ценности</h2>
             <div class="cards">
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png" alt="Помощь"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png"></div>
                     <h3>Помощь</h3>
-                    <p>Решаю реальные проблемы студентов — особенно первокурсников</p>
+                    <p>Решаю реальные проблемы студентов</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png" alt="Открытость"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png"></div>
                     <h3>Открытость</h3>
                     <p>Честный диалог между студентами, советом и администрацией</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png" alt="Развитие"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png"></div>
                     <h3>Развитие</h3>
                     <p>Новые проекты, улучшение старых, постоянный рост</p>
                 </div>
@@ -348,7 +241,6 @@
     </footer>
 
     <script>
-        // Подсветка активного пункта меню + затемнение хедера
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('nav a');
 
@@ -356,27 +248,20 @@
             let current = 'home';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
+                if (scrollY >= sectionTop) current = section.getAttribute('id');
             });
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
+                if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
             });
 
             document.querySelector('header').classList.toggle('scrolled', scrollY > 50);
         });
 
-        // Анимация появления секций при скролле
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.15 });
 
