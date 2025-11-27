@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Камилла Исаева</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E91E63;
+            --primary-light: #FDF2F8;
+            --text: #222;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background:#fff; color:var(--text); line-height:1.8; }
+
+        header {
+            position:fixed; top:0; left:0; right:0; height:76px;
+            display:flex; align-items:center; justify-content:space-between;
+            padding:0 24px; background:transparent; transition:all .4s; z-index:1000;
+        }
+        header.scrolled {
+            background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
+            box-shadow:0 4px 25px rgba(233,30,99,0.12); height:68px;
+        }
+        .logo-img {
+            width:48px; height:48px; border-radius:50%; object-fit:cover;
+            border:3px solid #fff; box-shadow:0 4px 15px rgba(233,30,99,0.3);
+        }
+        header.scrolled .logo-img { border-color:var(--primary); }
+
+        nav a {
+            color:#fff; text-decoration:none; margin-left:28px; font-weight:500; font-size:15px;
+            position:relative;
+        }
+        header.scrolled nav a { color:#333; }
+        nav a::after {
+            content:''; position:absolute; bottom:-6px; left:0; width:0; height:2px;
+            background:var(--primary); transition:0.4s;
+        }
+        nav a:hover::after, nav a.active::after { width:100%; }
+
+        .hero {
+            height:100vh; min-height:680px; display:flex; align-items:center;
+            justify-content:center; text-align:center;
+            background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.6)),
+                       url('https://i.ibb.co/W4z6W6mh/photo-2025-11-27-06-49-53.jpg') center/cover no-repeat fixed;
+        }
+        .hero h1 { font-family:'Playfair Display',serif; font-size:78px; color:#fff;
+                   margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7);
+                   opacity:0; animation:fadeUp 1.2s forwards .6s; }
+        .hero > .container > p {
+            font-size:22px; color:#eee; font-weight:300; margin-bottom:32px;
+            opacity:0; animation:fadeUp 1.2s forwards .9s;
+        }
+        .greeting {
+            display:flex; align-items:center; justify-content:center; gap:16px;
+            opacity:0; animation:fadeUp 1.2s forwards 1.2s;
+        }
+        .greeting img { width:82px; height:82px; border-radius:50%; object-fit:cover;
+                        border:4px solid rgba(255,255,255,0.4); }
+        .greeting p { font-size:20px; color:#fff; font-weight:500; }
+
+        .container { max-width:1100px; margin:0 auto; padding:0 24px; }
+        section { padding:120px 0; opacity:0; transform:translateY(40px); transition:all 1s; }
+        section.visible { opacity:1; transform:none; }
+
+        /* ОБО МНЕ — розовый фон */
+        .about-me { background: var(--primary-light); padding:140px 0; }
+        .about-me .wrapper {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .about-me img {
+            width: 380px; height: 380px; object-fit: cover;
+            border-radius: 28px; box-shadow: 0 25px 60px rgba(233,30,99,0.22);
+        }
+        .about-me-text { font-size: 18px; color: #444; }
+        .about-me-text p { margin-bottom: 24px; }
+
+        /* ОПЫТ, ЦЕННОСТИ, СВЯЗЬ — чисто белый фон + чёткие розовые иконки */
+        .white-section { background:#fff; }
+        h2 {
+            font-family:'Playfair Display',serif; font-size:48px; text-align:center;
+            color:var(--primary); margin-bottom:64px;
+        }
+        .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:36px; }
+        .card {
+            background:#fff; padding:56px 28px; border-radius:24px;
+            box-shadow:0 12px 40px rgba(0,0,0,0.07); text-align:center;
+            transition:transform .4s; border:1px solid #f0e0e8;
+        }
+        .card:hover { transform:translateY(-12px); box-shadow:0 20px 50px rgba(233,30,99,0.15); }
+        .icon { width:88px; height:88px; margin:0 auto 28px; display:flex; align-items:center; justify-content:center; }
+        .icon img { width:56px; height:56px; }
+
+        /* КОНТАКТЫ — розовый фон, но текст чёрный → белый */
+        .contact-section {
+            background:linear-gradient(135deg,#E91E63,#AD1457);
+            color:#fff; text-align:center; padding:120px 20px;
+        }
+        .contact-section h2 { color:#fff; }
+        .btn {
+            display:inline-block; background:#fff; color:var(--primary);
+            font-weight:600; font-size:18px; padding:18px 48px; border-radius:50px;
+            text-decoration:none; box-shadow:0 12px 35px rgba(233,30,99,0.4);
+            transition:0.3s;
+        }
+        .btn:hover { transform:translateY(-4px); }
+
+        @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+        @media (max-width: 968px) {
+            .about-me .wrapper { grid-template-columns: 1fr; text-align:center; gap:40px; }
+            .about-me img { width:320px; height:320px; margin:0 auto; }
+        }
+        @media (max-width: 768px) {
+            .hero { background-attachment:scroll; padding-top:80px; }
+            .hero h1 { font-size:56px; }
+            .greeting { flex-direction:column; }
+            h2 { font-size:42px; }
+            section { padding:90px 0; }
+            .about-me { padding:100px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://i.ibb.co/mCH4M3T8/photo-2025-11-27-07-27-25.jpg" alt="Камилла" class="logo-img">
+        <nav>
+            <a href="#" class="active">Главная</a>
+            <a href="#">Обо мне</a>
+            <a href="#">Опыт</a>
+            <a href="#">Ценности</a>
+            <a href="#">Связь</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Камилла<br>Исаева</h1>
+            <p>Студентка ВШБ НИУ ВШЭ • 1 курс «Управление бизнесом»</p>
+            <div class="greeting">
+                <img src="https://i.ibb.co/mCH4M3T8/photo-2025-11-27-07-27-25.jpg" alt="Камилла">
+                <p>Привет! Рада видеть тебя здесь</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-me">
+        <div class="container">
+            <div class="wrapper">
+                <img src="https://i.ibb.co/mCH4M3T8/photo-2025-11-27-07-27-25.jpg" alt="Камилла Исаева">
+                <div class="about-me-text">
+                    <p>Меня зовут Исаева Камилла, я студентка первого курса программы «Управление бизнесом».</p>
+                    <p>В своей предвыборной кампании я хочу рассказать о себе, своей мотивации, проделанной работе и целях.</p>
+                    <p>Последние три года своей жизни я посвятила общественным организациям, волонтёрству и социальным проектам. В школе я стала заместителем президента школы и активно развивалась в этой сфере. Я была главой медиа-отдела: писала посты, проводила викторины, опросы, интервью, ездила на мероприятия и писала газеты. Также организовывала квесты, спектакли, конкурсы и мюзиклы — этот опыт помог мне понять, что одна из главных целей моей жизни — помощь людям.</p>
+                    <p>Эту цель я продолжала реализовывать в волонтёрстве. Множество мероприятий и поездок стали не только частью моей социальной деятельности, но и моей жизни.</p>
+                    <p>Несмотря на то что в Студенческом совете ВШБ я всего 3 месяца, я уже успела сделать немало: почти месяц ежедневно работала волонтёром в Ситуационном центре ВШЭ, помогая сотням иностранных студентов, провела первую неформальную интеграционную встречу, участвую в планировании новых проектов и работаю в Секретариате.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОПЫТ — белый фон, чёрный текст, яркие розовые иконки -->
+    <section class="white-section">
+        <div class="container">
+            <h2>Опыт</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png"></div>
+                    <h3>Школьное самоуправление</h3>
+                    <p>Заместитель президента школы<br>Руководитель медиа-отдела<br>Организатор 20+ мероприятий</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png"></div>
+                    <h3>Волонтёрство</h3>
+                    <p>Десятки проектов и поездок<br>Месяц в Ситуационном центре ВШЭ<br>Помощь сотням иностранных студентов</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png"></div>
+                    <h3>Студенческий совет ВШБ</h3>
+                    <p>Комитет по работе с иностранцами<br>Первая интеграционная встреча<br>Работа в Секретариате</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЦЕННОСТИ — тоже белый фон -->
+    <section class="white-section">
+        <div class="container">
+            <h2>Ценности</h2>
+            <div class="cards">
+                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png"></div><h3>Помощь</h3><p>Решаю реальные проблемы студентов — особенно первокурсников</p></div>
+                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png"></div><h3>Открытость</h3><p>Честный диалог между студентами, советом и администрацией</p></div>
+                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png"></div><h3>Развитие</h3><p>Новые проекты, улучшение старых, постоянный рост</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СВЯЗЬ — розовый фон, белый текст (как и было) -->
+  <section class="contact-section">
+    <div class="container">
+        <h2>Связь со мной</h2>
+        <p style="font-size:19px; max-width:620px; margin:0 auto 48px; opacity:0.95; line-height:1.7;">
+            Есть идеи, вопросы или просто хочешь пообщаться?<br>
+            Пиши — отвечаю всем и всегда рада новым знакомствам!
+        </p>
+
+        <!-- Основная кнопка — открывает почту сразу -->
+        <a href="mailto:kazaisaeva@edu.hse.ru" class="btn">
+            Написать мне на почту
+        </a>
+
+        <!-- Резервный вариант (если mailto вдруг не сработает) -->
+        <p style="margin-top: 36px; font-size: 17px; opacity: 0.9;">
+            Или просто скопируй адрес:<br>
+            <span style="font-weight:600; font-size:18px; color:#fff; background:rgba(255,255,255,0.2); padding:8px 16px; border-radius:12px; display:inline-block; margin-top:8px;">
+                kazaisaeva@edu.hse.ru
+            </span>
+        </p>
+    </div>
+</section>
+
+    <footer style="background:#111; color:#ccc; text-align:center; padding:50px 20px;">
+        <div class="container">2025 Камилла Исаева</div>
+        <div class="container">ОП «Управление бизнесом»</div>
+        <div class="container">БМБ2505</div>
+       
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+        const observer = new IntersectionObserver(e => e.forEach(en => en.isIntersecting && en.target.classList.add('visible')), {threshold:0.1});
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>
