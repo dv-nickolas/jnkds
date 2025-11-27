@@ -1,4 +1,0 @@
-# Kamila
-# jnkds
-# jnkds
-# jnkds
