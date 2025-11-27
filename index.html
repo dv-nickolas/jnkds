@@ -14,7 +14,7 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background:#fff; color:var(--text); line-height:1.8; }
-
+        
         header {
             position:fixed; top:0; left:0; right:0; height:76px;
             display:flex; align-items:center; justify-content:space-between;
@@ -29,10 +29,10 @@
             border:3px solid #fff; box-shadow:0 4px 15px rgba(233,30,99,0.3);
         }
         header.scrolled .logo-img { border-color:var(--primary); }
-
+        
         nav a {
             color:#fff; text-decoration:none; margin-left:28px; font-weight:500; font-size:15px;
-            position:relative;
+            position:relative; transition:0.4s;
         }
         header.scrolled nav a { color:#333; }
         nav a::after {
@@ -40,6 +40,7 @@
             background:var(--primary); transition:0.4s;
         }
         nav a:hover::after, nav a.active::after { width:100%; }
+        nav a.active { color:var(--primary); }
 
         .hero {
             height:100vh; min-height:680px; display:flex; align-items:center;
@@ -47,9 +48,11 @@
             background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.6)),
                        url('https://i.ibb.co/W4z6W6mh/photo-2025-11-27-06-49-53.jpg') center/cover no-repeat fixed;
         }
-        .hero h1 { font-family:'Playfair Display',serif; font-size:78px; color:#fff;
-                   margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7);
-                   opacity:0; animation:fadeUp 1.2s forwards .6s; }
+        .hero h1 { 
+            font-family:'Playfair Display',serif; font-size:78px; color:#fff;
+            margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7);
+            opacity:0; animation:fadeUp 1.2s forwards .6s; 
+        }
         .hero > .container > p {
             font-size:22px; color:#eee; font-weight:300; margin-bottom:32px;
             opacity:0; animation:fadeUp 1.2s forwards .9s;
@@ -58,8 +61,10 @@
             display:flex; align-items:center; justify-content:center; gap:16px;
             opacity:0; animation:fadeUp 1.2s forwards 1.2s;
         }
-        .greeting img { width:82px; height:82px; border-radius:50%; object-fit:cover;
-                        border:4px solid rgba(255,255,255,0.4); }
+        .greeting img { 
+            width:82px; height:82px; border-radius:50%; object-fit:cover;
+            border:4px solid rgba(255,255,255,0.4); 
+        }
         .greeting p { font-size:20px; color:#fff; font-weight:500; }
 
         .container { max-width:1100px; margin:0 auto; padding:0 24px; }
@@ -81,23 +86,31 @@
         .about-me-text { font-size: 18px; color: #444; }
         .about-me-text p { margin-bottom: 24px; }
 
-        /* ОПЫТ, ЦЕННОСТИ, СВЯЗЬ — чисто белый фон + чёткие розовые иконки */
         .white-section { background:#fff; }
+
         h2 {
             font-family:'Playfair Display',serif; font-size:48px; text-align:center;
             color:var(--primary); margin-bottom:64px;
         }
-        .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:36px; }
+        .cards { 
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:36px; 
+        }
         .card {
             background:#fff; padding:56px 28px; border-radius:24px;
             box-shadow:0 12px 40px rgba(0,0,0,0.07); text-align:center;
             transition:transform .4s; border:1px solid #f0e0e8;
         }
-        .card:hover { transform:translateY(-12px); box-shadow:0 20px 50px rgba(233,30,99,0.15); }
-        .icon { width:88px; height:88px; margin:0 auto 28px; display:flex; align-items:center; justify-content:center; }
+        .card:hover { 
+            transform:translateY(-12px); 
+            box-shadow:0 20px 50px rgba(233,30,99,0.15); 
+        }
+        .icon { 
+            width:88px; height:88px; margin:0 auto 28px; 
+            display:flex; align-items:center; justify-content:center; 
+        }
         .icon img { width:56px; height:56px; }
 
-        /* КОНТАКТЫ — розовый фон, но текст чёрный → белый */
+        /* КОНТАКТЫ */
         .contact-section {
             background:linear-gradient(135deg,#E91E63,#AD1457);
             color:#fff; text-align:center; padding:120px 20px;
@@ -130,28 +143,28 @@
 <body>
 
     <header>
-        <img src="https://i.ibb.co/mCH4M3T8/photo-2025-11-27-07-27-25.jpg" alt="Камилла" class="logo-img">
+        <img src="https://i.ibb.co/2YHxwdK5/photo-2025-11-27-09-08-15.jpg" alt="Камилла" class="logo-img">
         <nav>
-            <a href="#" class="active">Главная</a>
-            <a href="#">Обо мне</a>
-            <a href="#">Опыт</a>
-            <a href="#">Ценности</a>
-            <a href="#">Связь</a>
+            <a href="#home" class="active">Главная</a>
+            <a href="#about">Обо мне</a>
+            <a href="#experience">Опыт</a>
+            <a href="#values">Ценности</a>
+            <a href="#contact">Связь</a>
         </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="container">
             <h1>Камилла<br>Исаева</h1>
             <p>Студентка ВШБ НИУ ВШЭ • 1 курс «Управление бизнесом»</p>
             <div class="greeting">
-                <img src="https://i.ibb.co/mCH4M3T8/photo-2025-11-27-07-27-25.jpg" alt="Камилла">
+                <img src="https://i.ibb.co/2YHxwdK5/photo-2025-11-27-09-08-15.jpg" alt="Камилла">
                 <p>Привет! Рада видеть тебя здесь</p>
             </div>
         </div>
     </section>
 
-    <section class="about-me">
+    <section class="about-me" id="about">
         <div class="container">
             <div class="wrapper">
                 <img src="https://i.ibb.co/mCH4M3T8/photo-2025-11-27-07-27-25.jpg" alt="Камилла Исаева">
@@ -166,23 +179,22 @@
         </div>
     </section>
 
-    <!-- ОПЫТ — белый фон, чёрный текст, яркие розовые иконки -->
-    <section class="white-section">
+    <section class="white-section" id="experience">
         <div class="container">
             <h2>Опыт</h2>
             <div class="cards">
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png" alt="Образование"></div>
                     <h3>Школьное самоуправление</h3>
                     <p>Заместитель президента школы<br>Руководитель медиа-отдела<br>Организатор 20+ мероприятий</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png" alt="Волонтёрство"></div>
                     <h3>Волонтёрство</h3>
                     <p>Десятки проектов и поездок<br>Месяц в Ситуационном центре ВШЭ<br>Помощь сотням иностранных студентов</p>
                 </div>
                 <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png"></div>
+                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png" alt="Студсовет"></div>
                     <h3>Студенческий совет ВШБ</h3>
                     <p>Комитет по работе с иностранцами<br>Первая интеграционная встреча<br>Работа в Секретариате</p>
                 </div>
@@ -190,55 +202,75 @@
         </div>
     </section>
 
-    <!-- ЦЕННОСТИ — тоже белый фон -->
-    <section class="white-section">
+    <section class="white-section" id="values">
         <div class="container">
             <h2>Ценности</h2>
             <div class="cards">
-                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png"></div><h3>Помощь</h3><p>Решаю реальные проблемы студентов — особенно первокурсников</p></div>
-                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png"></div><h3>Открытость</h3><p>Честный диалог между студентами, советом и администрацией</p></div>
-                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png"></div><h3>Развитие</h3><p>Новые проекты, улучшение старых, постоянный рост</p></div>
+                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png" alt="Помощь"></div><h3>Помощь</h3><p>Решаю реальные проблемы студентов — особенно первокурсников</p></div>
+                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/speech-bubble-with-dots.png" alt="Открытость"></div><h3>Открытость</h3><p>Честный диалог между студентами, советом и администрацией</p></div>
+                <div class="card"><div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/rocket.png" alt="Развитие"></div><h3>Развитие</h3><p>Новые проекты, улучшение старых, постоянный рост</p></div>
             </div>
         </div>
     </section>
 
-    <!-- СВЯЗЬ — розовый фон, белый текст (как и было) -->
-  <section class="contact-section">
-    <div class="container">
-        <h2>Связь со мной</h2>
-        <p style="font-size:19px; max-width:620px; margin:0 auto 48px; opacity:0.95; line-height:1.7;">
-            Есть идеи, вопросы или просто хочешь пообщаться?<br>
-            Пиши — отвечаю всем и всегда рада новым знакомствам!
-        </p>
-
-        <!-- Основная кнопка — открывает почту сразу -->
-        <a href="mailto:kazaisaeva@edu.hse.ru" class="btn">
-            Написать мне на почту
-        </a>
-
-        <!-- Резервный вариант (если mailto вдруг не сработает) -->
-        <p style="margin-top: 36px; font-size: 17px; opacity: 0.9;">
-            Или просто скопируй адрес:<br>
-            <span style="font-weight:600; font-size:18px; color:#fff; background:rgba(255,255,255,0.2); padding:8px 16px; border-radius:12px; display:inline-block; margin-top:8px;">
-                kazaisaeva@edu.hse.ru
-            </span>
-        </p>
-    </div>
-</section>
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2>Связь со мной</h2>
+            <p style="font-size:19px; max-width:620px; margin:0 auto 48px; opacity:0.95; line-height:1.7;">
+                Есть идеи, вопросы или просто хочешь пообщаться?<br>
+                Пиши — отвечаю всем и всегда рада новым знакомствам!
+            </p>
+            <a href="mailto:kazaisaeva@edu.hse.ru" class="btn">Написать мне на почту</a>
+            <p style="margin-top: 36px; font-size: 17px; opacity: 0.9;">
+                Или просто скопируй адрес:<br>
+                <span style="font-weight:600; font-size:18px; color:#fff; background:rgba(255,255,255,0.2); padding:8px 16px; border-radius:12px; display:inline-block; margin-top:8px;">
+                    kazaisaeva@edu.hse.ru
+                </span>
+            </p>
+        </div>
+    </section>
 
     <footer style="background:#111; color:#ccc; text-align:center; padding:50px 20px;">
         <div class="container">2025 Камилла Исаева</div>
         <div class="container">ОП «Управление бизнесом»</div>
         <div class="container">БМБ2505</div>
-       
     </footer>
 
     <script>
+        // Прокрутка — подсветка активного пункта меню
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a');
+
         window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Затемнение хедера при скролле
             document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
         });
-        const observer = new IntersectionObserver(e => e.forEach(en => en.isIntersecting && en.target.classList.add('visible')), {threshold:0.1});
-        document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+        // Анимация появления секций
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(sec => observer.observe(sec));
     </script>
 </body>
 </html>
