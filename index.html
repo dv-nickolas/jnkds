@@ -10,10 +10,35 @@
             --primary: #E91E63;
             --primary-light: #FDF2F8;
             --text: #222;
+            --bg: #fff;
+            --card-bg: #fff;
+            --light-gray: #f9f9f9;
+            --text-light: #555;
+            --shadow: rgba(0,0,0,0.08);
+        }
+        [data-theme="dark"] {
+            --primary: #FF6090;
+            --primary-light: #2d0b1e;
+            --text: #f0f0f0;
+            --bg: #0f0a0c;
+            --card-bg: #1a1115;
+            --light-gray: #1a1115;
+            --text-light: #ccc;
+            --shadow: rgba(0,0,0,0.4);
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background:#fff; color:var(--text); line-height:1.8; overflow-x:hidden; }
+        body { font-family: 'Inter', sans-serif; background:var(--bg); color:var(--text); line-height:1.8; overflow-x:hidden; transition:background .4s,color .4s; }
+        
+        /* Переключатель темы */
+        .theme-toggle {
+            position:fixed; top:20px; right:24px; z-index:1001;
+            width:48px; height:48px; background:rgba(255,255,255,0.9); backdrop-filter:blur(10px);
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            cursor:pointer; box-shadow:0 4px 15px rgba(233,30,99,0.2); transition:all .3s;
+        }
+        .theme-toggle:hover { transform:scale(1.1); }
+        .theme-toggle svg { width:24px; height:24px; fill:var(--primary); }
 
         /* Хедер */
         header {
@@ -25,18 +50,19 @@
             background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
             box-shadow:0 4px 25px rgba(233,30,99,0.12); height:68px;
         }
+        [data-theme="dark"] header.scrolled { background:rgba(20,15,18,0.96); }
         .logo-img {
             width:48px; height:48px; border-radius:50%; object-fit:cover;
             border:3px solid #fff; box-shadow:0 4px 15px rgba(233,30,99,0.3);
             transition:border-color .4s;
         }
         header.scrolled .logo-img { border-color:var(--primary); }
-
         nav a {
             color:#fff; text-decoration:none; margin-left:28px; font-weight:500; font-size:15px;
             position:relative; transition:color .4s;
         }
         header.scrolled nav a { color:#333; }
+        [data-theme="dark"] header.scrolled nav a { color:#eee; }
         nav a::after {
             content:''; position:absolute; bottom:-6px; left:0; width:0; height:2px;
             background:var(--primary); transition:width .4s;
@@ -48,75 +74,84 @@
         .hero {
             height:100vh; min-height:680px; display:flex; align-items:center;
             justify-content:center; text-align:center;
-            background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.6)),
+            background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.65)),
                        url('https://i.ibb.co/W4z6W6mh/photo-2025-11-27-06-49-53.jpg') center/cover no-repeat fixed;
         }
         .hero h1 { font-family:'Playfair Display',serif; font-size:78px; color:#fff;
-                   margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7);
-                   opacity:0; animation:fadeUp 1.2s forwards .6s; }
-        .hero > .container > p { font-size:22px; color:#eee; font-weight:300; margin-bottom:32px;
-                                 opacity:0; animation:fadeUp 1.2s forwards .9s; }
-        .greeting { display:flex; align-items:center; justify-content:center; gap:16px;
-                    opacity:0; animation:fadeUp 1.2s forwards 1.2s; }
+                   margin-bottom:8px; text-shadow:0 4px 16px rgba(0,0,0,0.7); }
+        .hero > .container > p { font-size:22px; color:#eee; font-weight:300; margin-bottom:32px; }
+        .greeting { display:flex; align-items:center; justify-content:center; gap:16px; }
         .greeting img { width:82px; height:82px; border-radius:50%; object-fit:cover;
                         border:4px solid rgba(255,255,255,0.4); }
         .greeting p { font-size:20px; color:#fff; font-weight:500; }
 
-        .container { max-width:1100px; margin:0 auto; padding:0 24px; }
+        .container { max-width:1200px; margin:0 auto; padding:0 24px; }
         section { padding:120px 0; opacity:0; transform:translateY(40px); transition:all 1s; }
         section.visible { opacity:1; transform:none; }
 
         /* Обо мне */
         .about-me { background:var(--primary-light); padding:140px 0; }
+        [data-theme="dark"] .about-me { background:#1a0d14; }
         .about-me .wrapper { display:grid; grid-template-columns:380px 1fr; gap:80px; align-items:center; }
         .about-me img { width:380px; height:380px; object-fit:cover; border-radius:28px;
                         box-shadow:0 25px 60px rgba(233,30,99,0.22); }
         .about-me-text { font-size:18px; color:#444; }
-        .about-me-text p { margin-bottom:24px; }
+        [data-theme="dark"] .about-me-text { color:#ddd; }
 
+        /* Опыт в студсовете — как на скриншоте */
+        .experience-new {
+            background:var(--light-gray);
+            padding:140px 0;
+        }
+        .experience-new h2 {
+            font-family:'Playfair Display',serif; font-size:48px; text-align:center;
+            color:var(--primary); margin-bottom:20px;
+        }
+        .experience-new .subtitle {
+            text-align:center; font-size:18px; color:var(--text-light);
+            max-width:900px; margin:0 auto 80px; line-height:1.7;
+        }
+        .experience-grid {
+            display:grid; grid-template-columns:repeat(3, 1fr); gap:40px; margin-bottom:80px;
+        }
+        .exp-card {
+            background:var(--card-bg); padding:40px 32px; border-radius:28px;
+            box-shadow:0 15px 40px var(--shadow); text-align:left;
+            transition:transform .4s,box-shadow .4s;
+        }
+        .exp-card:hover { transform:translateY(-12px); box-shadow:0 20px 50px rgba(233,30,99,0.2); }
+        .exp-card .icon {
+            width:72px; height:72px; background:var(--primary); border-radius:50%;
+            display:flex; align-items:center; justify-content:center; margin-bottom:28px;
+            overflow:hidden;
+        }
+        .exp-card .icon img {
+            width:40px; height:40px; filter:brightness(0) invert(1);
+        }
+        .exp-card h3 { font-size:22px; font-weight:600; margin-bottom:20px; color:var(--text); }
+        .exp-card p { font-size:16px; color:var(--text-light); line-height:1.8; margin-bottom:16px; }
+        .exp-card p:last-child { margin-bottom:0; }
+
+        .hippo { text-align:center; }
+        .hippo img { width:280px; margin-top:40px; }
+
+        /* Ценности и контакты */
         .white-section { background:#fff; }
-        h2 { font-family:'Playfair Display',serif; font-size:48px; text-align:center;
-             color:var(--primary); margin-bottom:64px; }
-
+        [data-theme="dark"] .white-section { background:#0f0a0c; }
         .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:36px; }
         .card {
-            background:#fff; padding:56px 28px; border-radius:24px;
-            box-shadow:0 12px 40px rgba(0,0,0,0.07); text-align:center;
-            transition:transform .4s,box-shadow .4s; border:1px solid #f0e0e8;
+            background:var(--card-bg); padding:56px 28px; border-radius:24px;
+            box-shadow:0 12px 40px var(--shadow); text-align:center;
+            transition:transform .4s,box-shadow .4s; border:1px solid rgba(233,30,99,0.1);
         }
-        .card:hover { transform:translateY(-12px); box-shadow:0 20px 50px rgba(233,30,99,0.15); }
+        .card:hover { transform:translateY(-12px); }
 
-        /* БОЛЬШИЕ РОЗОВЫЕ ТОЧКИ */
-        .card p {
-            position:relative;
-            padding-left:32px;
-            margin:16px 0;
-            text-align:left;
-            font-size:16px;
-            line-height:1.7;
-        }
-        .card p::before {
-            content:"•";
-            position:absolute;
-            left:0;
-            top:50%;
-            transform:translateY(-50%);
-            color:var(--primary);
-            font-size:32px;
-            font-weight:900;
-            line-height:1;
-        }
-
-        .icon { width:88px; height:88px; margin:0 auto 32px;
-                display:flex; align-items:center; justify-content:center; }
-        .icon img { width:56px; height:56px; }
-
-        /* Контакты */
         .contact-section {
             background:linear-gradient(135deg,#E91E63,#AD1457);
             color:#fff; text-align:center; padding:120px 20px;
         }
-        .contact-section h2 { color:#fff; }
+        [data-theme="dark"] .contact-section { background:linear-gradient(135deg,#FF4081,#C2185B); }
+
         .btn {
             display:inline-block; background:#fff; color:var(--primary);
             font-weight:600; font-size:18px; padding:18px 48px; border-radius:50px;
@@ -127,32 +162,110 @@
 
         @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
 
-        /* Адаптив */
-        @media (max-width:968px) {
-            .about-me .wrapper { grid-template-columns:1fr; text-align:center; gap:40px; }
-            .about-me img { width:320px; height:320px; margin:0 auto; }
+        @media (max-width:1024px) {
+            .experience-grid { grid-template-columns:1fr; }
+            .exp-card { max-width:600px; margin:0 auto; }
         }
         @media (max-width:768px) {
-            .hero { background-attachment:scroll; padding-top:80px; }
             .hero h1 { font-size:56px; }
             .greeting { flex-direction:column; }
             h2 { font-size:42px; }
             section { padding:90px 0; }
-            .about-me { padding:100px 0; }
-            nav a { margin-left:16px; font-size:14px; }
-            .card p { padding-left:28px; font-size:15px; }
-            .card p::before { font-size:28px; }
+            .about-me .wrapper { grid-template-columns:1fr; text-align:center; }
         }
-    </style>
+ 
+  .motivation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 48px;
+    max-width: 1350px;
+    margin: 0 auto;
+  }
+
+  .m-card {
+    background: var(--card-bg);
+    border-radius: 36px;
+    padding: 56px 44px;
+    text-align: center;
+    box-shadow: 0 25px 60px var(--shadow);
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .m-card:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 35px 80px rgba(233,30,99,0.3);
+  }
+
+  .m-icon {
+    width: 100px;
+    height: 100px;
+    background: var(--primary);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-shrink: 0;
+  }
+
+  .m-icon img {
+    width: 52px;
+    height: 52px;
+    filter: brightness(0) invert(1);
+  }
+
+  .m-card h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 20px;
+  }
+
+  .m-card p {
+    font-size: 17px;
+    color: var(--text-light);
+    line-height: 1.8;
+    flex-grow: 1;
+  }
+
+  [data-theme="dark"] .m-card p { color: #ddd; }
+
+  @media (max-width: 768px) {
+    .motivation-grid { grid-template-columns: 1fr; }
+    .m-card { padding: 48px 32px; }
+  }
+
+  .m-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #222 !important;               /* чёрный в светлой теме */
+  transition: color 0.4s ease;
+}
+
+[data-theme="dark"] .m-title {
+  color: #ffffff !important;            /* белый в тёмной теме */
+}
+</style>
 </head>
-<body>
+<body data-theme="light">
+
+    <!-- Переключатель темы -->
+    <div class="theme-toggle" onclick="document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark'">
+        <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m8.485-8.485l-.707.707M5.222 18.778l-.707.707m15.263.707l-.707-.707M4.515 5.222l-.707-.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
+    </div>
 
     <header>
         <img src="https://i.ibb.co/2YHxwdK5/photo-2025-11-27-09-08-15.jpg" alt="Камилла" class="logo-img">
         <nav>
             <a href="#home" class="active">Главная</a>
             <a href="#about">Обо мне</a>
-            <a href="#experience">Опыт</a>
+            <a href="#experience">Опыт в Студсовете</a>
+            <a href="#motivation">Мотивация</a>
             <a href="#values">Ценности</a>
             <a href="#contact">Связь</a>
         </nav>
@@ -184,34 +297,173 @@
         </div>
     </section>
 
-    <section class="white-section" id="experience">
-        <div class="container">
-            <h2>Опыт</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/graduation-cap.png" alt="Образование"></div>
-                    <h3>Школьное самоуправление</h3>
-                    <p>Заместитель президента школы</p>
-                    <p>Руководитель медиа-отдела</p>
-                    <p>Организатор 20+ мероприятий</p>
+    <!-- ОПЫТ — ТОЧНО КАК НА СКРИНШОТЕ + ФОТО В КВАДРАТЕ -->
+   <!-- ОПЫТ — карточки шире, всё красиво и ровно -->
+<section class="experience-new" id="experience">
+  <div class="container" style="max-width:1400px;">
+    
+    <h2>Мой опыт в Студенческом Совете:<br>три месяца значимой работы</h2>
+
+    <!-- УМЕНЬШЕННАЯ И КРАСИВАЯ ЦИТАТА -->
+    <div style="position:relative; height:160px; margin:80px auto 100px; max-width:960px;">
+      <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;">
+        <span style="position:absolute; left:0; top:-10px; font-family:Georgia,serif; font-size:160px; color:var(--primary); opacity:0.25; line-height:1;">“</span>
+        <span style="position:absolute; right:0; bottom:-30px; font-family:Georgia,serif; font-size:160px; color:var(--primary); opacity:0.25; line-height:1;">”</span>
+      </div>
+
+      <blockquote style="
+        font-size:28px;
+        font-style:italic;
+        color:var(--primary);
+        line-height:1.55;
+        margin:0;
+        padding:0 80px;
+        text-align:center;
+      ">
+        Несмотря на то, что мой опыт в Студенческом Совете - всего три месяца, я уже успела внести свой вклад в работу нашего Совета.
+      </blockquote>
+    </div>
+
+        <div class="experience-grid" style="grid-template-columns: repeat(3, 1fr); gap: 56px; max-width: 1350px; margin: 0 auto;">
+            
+            <!-- Первая карточка -->
+            <div class="exp-card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/ios-filled/100/E91E63/help.png" alt="Помощь">
                 </div>
-                <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/charity.png" alt="Волонтёрство"></div>
-                    <h3>Волонтёрство</h3>
-                    <p>Десятки проектов и поездок</p>
-                    <p>Месяц в Ситуационном центре ВШЭ</p>
-                    <p>Помощь сотням иностранных студентов</p>
-                </div>
-                <div class="card">
-                    <div class="icon"><img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png" alt="Студсовет"></div>
-                    <h3>Студенческий совет ВШБ</h3>
-                    <p>Комитет по работе с иностранцами</p>
-                    <p>Первая интеграционная встреча</p>
-                    <p>Работа в Секретариате</p>
-                </div>
+                <h3>Ситуационный Центр ВШЭ</h3>
+                <p>Почти месяц ежедневной работы в Ситуационном центре ВШЭ в качестве волонтёра стал для меня одним из самых сложных и одновременно самых полезных периодов. Это была интенсивная работа, требующая концентрации, быстрого принятия решений и эмоциональной устойчивости.</p>
+                <p style="margin-top:16px;">Помощь, оказанная администрацией и нами, волонтёрами, была высоко оценена сотнями иностранных студентов, которые столкнулись с трудностями адаптации. Мы работали над решением бытовых вопросов, помогали с документами, консультировали по учебным вопросам и просто поддерживали морально.</p>
             </div>
+
+            <!-- Вторая карточка -->
+            <div class="exp-card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/ios-filled/100/E91E63/globe.png" alt="Мир">
+                </div>
+                <h3>Комитет по Работе с Иностранными Студентами</h3>
+                <p>В рамках работы комитета я провела первую неформальную встречу студентов, которая включала множество активностей, направленных на знакомство и интеграцию иностранных учащихся в университетское сообщество. Мероприятие включало интерактивные игры, культурный обмен и квест.</p>
+                <p style="margin-top:16px;">Совместно наш комитет разработал амбициозные планы по реализации новых проектов, направленных на улучшение жизни студентов. Это включает программу менторства, культурные мероприятия, встречи, дискуссии и совместное времяпрепровождение.</p>
+            </div>
+
+           <!-- Третья карточка — с прозрачным бегемотиком и розовой подсветкой -->
+<div class="exp-card" style="display:flex; flex-direction:column;">
+    <div class="icon">
+        <img src="https://img.icons8.com/ios-filled/100/E91E63/document.png" alt="Секретариат">
+    </div>
+    <h3 style="margin-bottom:20px;">Работа в Секретариате</h3>
+    <p style="flex-grow:1; margin-bottom:20px;">
+        Моя деятельность в Секретариате, хотя и не настолько публична, играет важную роль в функционировании Совета. Я осуществляю организационное, аналитическое и консультативное обеспечение работы внутри Совета.
+    </p>
+
+    <!-- Бегемотик без белого фона + розовое свечение -->
+    <div style="text-align:center; margin-top:auto;">
+        <img src="https://i.postimg.cc/wMtV8cGV/sticker.webp" 
+             alt="Бегемотик с розой" 
+             style="width:270px; height:auto; border-radius:32px; 
+                    filter: drop-shadow(0 0 30px rgba(233, 30, 99, 0.6)) 
+                            drop-shadow(0 0 60px rgba(233, 30, 99, 0.4));
+                    background:transparent;">
+    </div>
+</div>
         </div>
-    </section>
+    </div>
+</section>
+
+<section class="motivation" id="motivation" style="padding:160px 0 140px; background:var(--light-gray);">
+  <div class="container" style="max-width:1400px; text-align:center;">
+
+    <h2 style="font-family:'Playfair Display',serif; font-size:52px; color:var(--primary); margin-bottom:90px;">
+      Моя мотивация:<br>почему я хочу быть в Студенческом Совете
+    </h2>
+
+<!-- ЦИТАТА — ФИНАЛЬНАЯ ВЕРСИЯ, КАВЫЧКИ ИДЕАЛЬНО ПО ТЕКСТУ -->
+<div style="position:relative; height:180px; margin:0 auto 110px; max-width:900px;">
+  <div style="
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  ">
+    <!-- открывающая кавычка -->
+    <span style="
+      position:absolute;
+      left:10px;
+      top:-10px;
+      font-family:Georgia,serif;
+      font-size:180px;
+      color:var(--primary);
+      opacity:0.25;
+      line-height:1;
+    ">“</span>
+    
+    <!-- закрывающая кавычка -->
+    <span style="
+      position:absolute;
+      right:10px;
+      bottom:-20px;
+      font-family:Georgia,serif;
+      font-size:180px;
+      color:var(--primary);
+      opacity:0.25;
+      line-height:1;
+    ">”</span>
+  </div>
+
+  <!-- сам текст цитаты -->
+  <blockquote style="
+    font-size:34px;
+    font-style:italic;
+    color:var(--primary);
+    line-height:1.5;
+    margin:0;
+    padding:0 70px;
+    text-align:center;
+  ">
+    Три главные причины,<br>которые движут мной каждый день
+  </blockquote>
+</div>
+
+ <!-- Фото -->
+    <img src="https://i.ibb.co/FkxwHpSf/photo-2025-11-29-05-13-23.jpg" 
+         alt="Команда Студсовета" 
+         style="width:100%; max-width:1000px; border-radius:36px; 
+                box-shadow:0 30px 80px rgba(233,30,99,0.35); display:block; margin:0 auto 100px;">
+
+    <!-- Карточки — без изменений, они уже идеальны -->
+    <div class="motivation-grid">
+  <div class="m-card">
+    <div class="m-icon">
+      <img src="https://img.icons8.com/ios-filled/100/E91E63/conference.png" alt="Люди">
+    </div>
+    <h3 class="m-title">Взаимодействие с людьми</h3>
+    <p>Для меня коммуникация и общение — это не просто приятное дополнение к работе, это её суть. В Студенческом Совете я хочу находить единомышленников, людей, которые разделяют мои ценности и стремления.</p>
+    <p style="margin-top:16px;">Каждый разговор, каждая встреча, каждый проект — это возможность узнать что-то новое и вырасти как личность и как лидер.</p>
+  </div>
+
+  <div class="m-card">
+    <div class="m-icon">
+      <img src="https://img.icons8.com/ios-filled/100/E91E63/process.png" alt="Система">
+    </div>
+    <h3 class="m-title">Совершенствование системы</h3>
+    <p>Я понимаю, что идеала не существует, однако стремиться к повышению качества и продуктивности необходимо постоянно. Для меня это личный вызов — сделать процессы эффективнее и жизнь студентов комфортнее.</p>
+    <p style="margin-top:16px;">Это не критика, а желание внести свой вклад в эволюцию системы.</p>
+  </div>
+
+  <div class="m-card">
+    <div class="m-icon">
+      <img src="https://img.icons8.com/ios-filled/100/E91E63/helping-hand.png" alt="Помощь">
+    </div>
+    <h3 class="m-title">Помощь — мой главный приоритет</h3>
+    <p>Последнее в списке, но первое по значимости — это помощь. Я всегда готова поддержать: адаптация, учёба, мероприятия или просто совет.</p>
+    <p style="margin-top:16px;">Моё время, энергия и связи — для студентов ВШБ.</p>
+  </div>
+</div>
+
+  </div>
+</section>
 
     <section class="white-section" id="values">
         <div class="container">
@@ -254,27 +506,22 @@
     </section>
 
     <footer style="background:#111; color:#ccc; text-align:center; padding:50px 20px;">
-        <div class="container">2025 Камилла Исаева</div>
-        <div class="container">ОП «Управление бизнесом»</div>
-        <div class="container">БМБ2505</div>
+        <div class="container">2025 Камилла Исаева • ОП «Управление бизнесом» • БМБ2505</div>
     </footer>
 
     <script>
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('nav a');
-
         window.addEventListener('scroll', () => {
             let current = 'home';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
                 if (scrollY >= sectionTop) current = section.getAttribute('id');
             });
-
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
             });
-
             document.querySelector('header').classList.toggle('scrolled', scrollY > 50);
         });
 
@@ -283,7 +530,6 @@
                 if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.15 });
-
         document.querySelectorAll('section').forEach(sec => observer.observe(sec));
     </script>
 </body>
